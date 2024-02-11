@@ -1,40 +1,26 @@
-﻿using Intro.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Intro.DataAccess.Abstracts;
+using Intro.Entities;
 
 namespace Intro.Business
 {
 
     public class CourseManager
     {
-        Course[] courses = new Course[3];
+        //dependency injection
+        private readonly ICourseDal _courseDal;
 
         //constructor
-        public CourseManager()
+        public CourseManager(ICourseDal courseDal)
         {
-            Course course1 = new Course();
-            course1.Id = 1;
-            course1.Name = "C#";
-
-            Course course2 = new Course();
-            course2.Id = 2;
-            course2.Name = "Java";
-
-            Course course3 = new Course();
-            course3.Id = 3;
-            course3.Name = "Python";
-
-            courses[0] = course1;
-            courses[1] = course2;
-            courses[2] = course3;   
+            _courseDal = courseDal;
         }
 
-        public Course[] GetAll()
+        Course[] courses = new Course[3];
+
+        public List<Course> GetAll()
         {
-            return courses;
+            // business rules
+            return _courseDal.GetAll();
         }
     }
 }
